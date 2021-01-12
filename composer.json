@@ -1,0 +1,31 @@
+{
+  "name": "lessmore92/php-ripple-binary-codec",
+  "description": "PHP API for interacting with the XRP Ledger",
+  "keywords": [
+    "ripple",
+    "ripple-tx-signing",
+    "transaction-signing",
+    "xrp-ledger",
+    "xrp"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lessmore92",
+      "email": "bahramisoft@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">7",
+    "lessmore92/buffer": "v1.0.0",
+    "simplito/bn-php": "~1.1.0",
+    "lessmore92/php-ripple-address-codec": "v1.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lessmore92\\RippleBinaryCodec\\": "src/"
+    }
+  }
+}
