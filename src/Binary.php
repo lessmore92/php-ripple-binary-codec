@@ -23,15 +23,20 @@ class Binary
     public function serializeObject($json, $options)
     {
         $out    = [];
-        $prefix = $options['prefix'];
+        $prefix = isset($options['prefix']) ? $options['prefix'] : false;
         if ($prefix)
         {
             $out[] = $prefix->getHex();
         }
-        $ser   = new TxSerializer();
-        $out[] = $ser->SerializeTx($json)
-                     ->getHex()
+        $ser    = new TxSerializer();
+        $out[]  = $ser->SerializeTx($json, $options)
+                      ->getHex()
         ;
+        $suffix = isset($options['suffix']) ? $options['suffix'] : false;
+        if ($suffix)
+        {
+            $out[] = $suffix->getHex();
+        }
 
         return strtoupper(join($out));
     }

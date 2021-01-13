@@ -20,4 +20,9 @@ class RippleBinaryCodec
     {
         return $this->binary->signingData($json);
     }
+
+    public function encode($json)
+    {
+        return $this->binary->serializeObject($json, []);
+    }
 }

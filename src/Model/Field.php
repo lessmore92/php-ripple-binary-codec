@@ -40,8 +40,8 @@ class Field extends BaseModel
         $filed->isSerialized            = $json->isSerialized;
         $filed->isSigningField          = $json->isSigningField;
         $filed->type                    = Definitions::getType($json->type);
-        $filed->ordinal                 = $filed->type->ordinal;
-        $filed->header                  = self::header($filed->ordinal, $json->nth);
+        $filed->ordinal                 = $filed->type->ordinal << 16 | $filed->nth;
+        $filed->header                  = self::header($filed->type->ordinal, $json->nth);
 
         return $filed;
     }

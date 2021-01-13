@@ -22,7 +22,7 @@ class TxSerializer
         $this->addressCodec = new RippleAddressCodec();
     }
 
-    public function SerializeTx($tx)
+    public function SerializeTx($tx, $options)
     {
         $properties = [];
         foreach (json_decode(json_encode($tx), true) as $name => $item)
@@ -41,9 +41,12 @@ class TxSerializer
             return $a->ordinal - $b->ordinal;
         });
 
-        $filtered = array_filter($filtered, function (Field $item) {
-            return $item->isSigningField;
-        });
+        if (isset($options['signingFieldsOnly']))
+        {
+            $filtered = array_filter($filtered, function (Field $item) {
+                return $item->isSigningField;
+            });
+        }
 
         $bytes = [];
         /**
@@ -55,10 +58,10 @@ class TxSerializer
                           ->getHex()
             ;
 
-            $bytes[] = $header = $item->header->getHex();
+            $bytes[] = $item->header->getHex();
             if ($item->isVariableLengthEncoded)
             {
-                $bytes[] = $size = Utils::decimalArrayToHexStr($this->encodeVariableLength(strlen($value) / 2));
+                $bytes[] = Utils::decimalArrayToHexStr($this->encodeVariableLength(strlen($value) / 2));
             }
             $bytes[] = $value;
 
@@ -89,8 +92,10 @@ class TxSerializer
         {
             return $this->encodeAccountID($item->value);
         }
-
-        return new Buffer();
+        else
+        {
+            throw new Exception(sprintf('field %s not supported field', $item->name));
+        }
     }
 
     public function encodeTransactionType($type)
