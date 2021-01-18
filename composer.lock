@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "958598abb31415f2f5bd07c6869c05a6",
+  "content-hash": "031943dafbf8bb8413b44b2bc4631e95",
   "packages": [
     {
       "name": "lessmore92/base-x",
@@ -111,16 +111,16 @@
     },
     {
       "name": "lessmore92/php-ripple-address-codec",
-      "version": "v1.0.0",
+      "version": "v1.0.1",
       "source": {
         "type": "git",
         "url": "https://github.com/lessmore92/php-ripple-address-codec.git",
-        "reference": "113e272974a574921145aa962d1d14a5fe0e1761"
+        "reference": "b09681f3e3ba66ada4453520a976e284a8499e99"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/lessmore92/php-ripple-address-codec/zipball/113e272974a574921145aa962d1d14a5fe0e1761",
-        "reference": "113e272974a574921145aa962d1d14a5fe0e1761",
+        "url": "https://api.github.com/repos/lessmore92/php-ripple-address-codec/zipball/b09681f3e3ba66ada4453520a976e284a8499e99",
+        "reference": "b09681f3e3ba66ada4453520a976e284a8499e99",
         "shasum": ""
       },
       "require": {
@@ -157,9 +157,9 @@
       ],
       "support": {
         "issues": "https://github.com/lessmore92/php-ripple-address-codec/issues",
-        "source": "https://github.com/lessmore92/php-ripple-address-codec/tree/v1.0.0"
+        "source": "https://github.com/lessmore92/php-ripple-address-codec/tree/v1.0.1"
       },
-      "time": "2021-01-11T12:32:09+00:00"
+      "time": "2021-01-16T22:30:46+00:00"
     },
     {
       "name": "simplito/bigint-wrapper-php",

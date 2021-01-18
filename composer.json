@@ -21,7 +21,7 @@
     "php": ">7",
     "lessmore92/buffer": "v1.0.0",
     "simplito/bn-php": "~1.1.0",
-    "lessmore92/php-ripple-address-codec": "v1.0.0"
+    "lessmore92/php-ripple-address-codec": "v1.0.1"
   },
   "autoload": {
     "psr-4": {
