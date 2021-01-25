@@ -7,6 +7,9 @@
 
 namespace Lessmore92\RippleBinaryCodec;
 
+define('ARRAY_END_MARKER', 0xf1);
+define('OBJECT_END_MARKER_BYTE', 0xe1);
+
 use BN\BN;
 use Exception;
 use Lessmore92\Buffer\Buffer;
@@ -65,6 +68,12 @@ class TxSerializer
             }
             $bytes[] = $value;
 
+            if ($item->type->name == 'STObject')
+            {
+                $bytes[] = Buffer::int(OBJECT_END_MARKER_BYTE)
+                                 ->getHex()
+                ;
+            }
         }
 
         return Buffer::hex(join($bytes));
@@ -92,6 +101,14 @@ class TxSerializer
         {
             return $this->encodeAccountID($item->value);
         }
+        else if ($item->type->name == 'STArray')
+        {
+            return $this->encodeSTArray($item->value);
+        }
+        else if ($item->type->name == 'STObject')
+        {
+            return $this->encodeSTObject($item->value);
+        }
         else
         {
             throw new Exception(sprintf('field %s not supported field', $item->name));
@@ -115,9 +132,9 @@ class TxSerializer
 
         $intBuf = [
             sprintf('%08X', $number->shrn(32)
-                                   ->toString()),
+                ->toString()),
             sprintf('%08X', $number->iand($mask)
-                                   ->toString()),
+                ->toString()),
         ];
 
         $amount = Buffer::hex(join($intBuf));
@@ -149,7 +166,7 @@ class TxSerializer
     public function encodeVariableLength(int $length)
     {
         $lenBytes = Buffer::hex('000000')
-                          ->getDecimal()
+            ->getDecimal()
         ;
 
         if ($length <= 192)
@@ -173,5 +190,23 @@ class TxSerializer
             return array_slice($lenBytes, 0, 3);
         }
         throw new Exception("Overflow error");
+    }
+
+    public function encodeSTArray($array)
+    {
+        $bytes = [];
+        foreach ($array as $_obj)
+        {
+            $bytes = array_merge($bytes, $this->SerializeTx($_obj, [])
+                                              ->getDecimal());
+        }
+
+        $bytes[] = ARRAY_END_MARKER;
+        return Buffer::hex(Utils::decimalArrayToHexStr($bytes));
+    }
+
+    public function encodeSTObject($obj)
+    {
+        return $this->SerializeTx($obj, []);
     }
 }
